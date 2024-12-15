@@ -1,0 +1,211 @@
+@use '@/style/lp/scss/global.scss' as *;
+.contact {
+    padding-bottom: 100px;
+    background: #fff;
+
+    @include mq(tb) {
+        padding-bottom: 10%;
+    }
+
+    &__inner {
+        max-width: 1100px;
+        width: 90%;
+        margin: 0 auto;
+        padding: 80px;
+        background-color: $base;
+        border-radius: 1.25rem;
+
+        @include mq(pc) {
+            padding: 8%;
+        }
+    }
+
+    &__title {
+        color: #102334;
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: .03em;
+        text-align: center;
+        margin-bottom: 1.4em;
+
+        @include mq(sp) {
+            font-size: 1.5rem;
+        }
+    }
+
+    dl {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+
+        &.textarea {
+            align-items: flex-start;
+        }
+
+        +dl {
+            margin-top: 3rem;
+        }
+
+        dt {
+            width: 224px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            &.required::after {
+                content: '必須';
+                background: $main2;
+                color: $white;
+                border: 1px solid;
+            }
+
+            &.any::after {
+                content: '任意';
+                color: $main2;
+                border: 1px solid $main2;
+            }
+
+            &::after {
+                padding: 1px 6px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 13px;
+                font-weight: 700;
+                line-height: 1.5;
+                border-radius: 4px;
+            }
+        }
+
+        dd {
+            flex: 1;
+
+            input {
+                padding: 16px;
+                width: 100%;
+                height: 55px;
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                background-color: $white;
+            }
+
+            textarea {
+                padding: 16px;
+                width: 100%;
+                height: 200px;
+                border: none;
+                outline: none;
+                border-radius: 5px;
+                background-color: $white;
+
+            }
+
+            ::placeholder {
+                color: #ccc;
+            }
+        }
+
+        @include mq(pc) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+
+            dt {
+                width: auto;
+                gap: 1rem;
+            }
+
+            dd {
+                width: 100%;
+            }
+        }
+
+        @include mq(sp) {
+            +dl {
+                margin-top: 1.5rem;
+            }
+        }
+    }
+
+    .form_privacy {
+        max-width: fit-content;
+        margin: 0 auto;
+        margin-top: 40px;
+
+
+        label {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+
+            &::before {
+                content: '';
+                display: block;
+                width: 20px;
+                height: 20px;
+                border-radius: 2px;
+                border: 2px solid $font-color;
+                flex-shrink: 0;
+                cursor: pointer;
+            }
+
+            &:has(:checked)::after {
+                position: absolute;
+                top: 5px;
+                left: 7px;
+                transform: rotate(45deg);
+                width: 5px;
+                height: 10px;
+                border: solid $font-color;
+                border-width: 0 2px 2px 0;
+                content: '';
+            }
+
+            span {
+                color: #091621;
+                font-size: 13px;
+                font-weight: 500;
+                line-height: 1.5;
+            }
+
+            input {
+                display: none;
+            }
+        }
+    }
+
+    .form__submit {
+        margin-top: 2rem;
+
+        button {
+            border-radius: 100px;
+            background: $white;
+            box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 440px;
+            height: 80px;
+            margin: 0 auto;
+            color: $main2;
+            font-size: 1.25rem;
+            font-weight: 500;
+            line-height: 1.8;
+            letter-spacing: .03em;
+            cursor: pointer;
+        }
+
+        @include mq(tb) {
+            button {
+                max-width: 100%;
+                width: 350px;
+                height: 60px;
+            }
+        }
+    }
+}

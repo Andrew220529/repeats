@@ -1,0 +1,105 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 768px;
+  width: 100%;
+  padding: 20px 0;
+  background-color: black;
+  color: white;
+  z-index: 3;
+}
+.headerLogo {
+  font-weight: 300;
+  font-size: 14px;
+  text-align: center;
+  line-height: 1;
+  position: relative;
+  z-index: 2;
+}
+
+.menu {
+  position: absolute;
+  width: 34px;
+  height: 36px;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  padding: 10px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.search {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 3;
+}
+
+.subMenu {
+  max-width: 768px;
+  width: 50%;
+  min-width: 320px;
+  height: 100vh;
+  position: fixed;
+  background-color: black;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  padding: 40px;
+  z-index: 2;
+}
+.subMenu.active {
+  opacity: 1;
+  visibility: visible;
+}
+.subMenu ul {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.subMenu ul li a {
+  color: #fff;
+}
+
+.overlay {
+  max-width: 768px;
+  width: 100%;
+  min-width: 320px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
+}
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search_input {
+  position: absolute;
+  top: 50px;
+  width: 150px !important;
+  right: 0;
+  height: 50px;
+  padding: 10px;
+  background: #fff;
+  color: #000 !important;
+<<<<<<< HEAD
+}
+=======
+}
+/*# sourceMappingURL=Header.module.css.map */
+>>>>>>> recommendation_dev

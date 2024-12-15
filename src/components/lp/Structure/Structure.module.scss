@@ -1,0 +1,40 @@
+@use '@/style/lp/scss/global.scss' as *;
+
+.structure {
+    background-color: $bg;
+
+    &__mainText {
+        max-width: 100%;
+        width: 1000px;
+        padding: 2.25em 1rem;
+        margin: 4.25rem auto;
+        color: $main2;
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.8;
+        border-radius: 1rem;
+        border: 4px solid $main2;
+        background: $white;
+
+        span {
+            display: inline-block;
+        }
+
+        @include mq(tb) {
+            font-size: 1.25rem;
+            margin: 8% auto 5%;
+        }
+
+        @include mq(sp) {
+            font-size: 14px;
+        }
+    }
+
+    &__body {
+        text-align: center;
+        img {
+            margin-inline: auto;
+        }
+    }
+}

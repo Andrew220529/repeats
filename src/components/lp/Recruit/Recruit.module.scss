@@ -1,0 +1,18 @@
+@use '@/style/lp/scss/global.scss' as *;
+.recruitment {
+    background-color: $bg;
+
+    &__img {
+        text-align: center;
+        margin: 0 auto;
+        margin-top: 3rem;
+
+        img {
+            margin-inline: auto;
+        }
+
+        @include mq(sp) {
+            margin-top: 1.5rem;
+        }
+    }
+}

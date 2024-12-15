@@ -1,0 +1,23 @@
+$main: rgba(30, 179, 226, 1);
+$main2: #5ADCD4;
+$black: #091621;
+$font-color: #091621;
+$white: #fff;
+$accent: #F6771B;
+$base: #F4F9F8;
+$illust: #555555;
+$red: #E33B57;
+$pink: #DC2A8A;
+$bg: #F4F9F8;
+
+$breakpoint: (
+    sp: 'screen and (max-width: 640px)',
+    tb: 'screen and (max-width: 768px)',
+    pc: 'screen and (max-width: 1024px)'
+);
+
+@mixin mq($bp) {
+    @media #{map-get($breakpoint, $bp)} {
+        @content;
+    }
+}

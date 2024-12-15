@@ -1,0 +1,97 @@
+@use '@/style/lp/scss/global.scss' as *;
+
+.section {
+    &__inner {
+        width: 90%;
+        padding: 100px 0;
+        margin: 0 auto;
+
+        @include mq(tb) {
+            padding: 10% 0;
+        }
+    }
+
+    &__title {
+        position: relative;
+        text-align: center;
+
+        &::before {
+            content: attr(data-en)"";
+            color: $font-color;
+            opacity: 0.03;
+            font-family: Roboto;
+            font-size: 120px;
+            font-weight: 400;
+            line-height: 0.8333333333;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            z-index: -1;
+        }
+
+        >span {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(0%, -50%);
+            width: 100%;
+            font-size: 40px;
+            font-weight: 700;
+            letter-spacing: .03em;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+
+            &.aic {
+                align-items: center;
+                gap: 8px;
+            }
+        }
+
+        .fun {
+            color: $red;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 2.45em;
+            }
+        }
+
+        @include mq(pc) {
+            &::before {
+                font-size: 100px;
+            }
+
+            >span {
+                font-size: 32px;
+            }
+        }
+
+        @include mq(tb) {
+            &::before {
+                font-size: 80px;
+            }
+        }
+
+        @include mq(sp) {
+            &::before {
+                font-size: 13vw;
+            }
+
+            >span {
+                font-size: 5.25vw;
+            }
+        }
+    }
+
+    &__text {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.6;
+        letter-spacing: .03em;
+        margin-top: 1.5em;
+        text-align: center;
+    }
+}

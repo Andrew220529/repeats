@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique
+  email     String?    @unique
+  password  String?    @default("repeats")
+  posts     Post[]
+  followers Follower[] @relation("UserToFollower")
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Post {
+  id               Int        @id @default(autoincrement())
+  author           User       @relation(fields: [authorId], references: [id])
+  authorId         Int
+  caption          String?
+  commentsCount    Int?
+  likeCount        Int?
+  mediaProductType String?
+  mediaUrl         String?
+  permalink        String?
+  analyses         Analysis[]
+  proposal         Proposal[]
+  timestamp        String?
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model Follower {
+  id            Int     @id @default(autoincrement())
+  name          String?
+  username      String  @unique
+  usertype      String?
+  profileImgUrl String?
+  biography     String?
+  interests     String? @db.VarChar(2000)
+  age           String?
+  gender        String?
+  users         User[]  @relation("UserToFollower")
+}
+
+model Analysis {
+  id            Int      @id @default(autoincrement())
+  relatedPost   Post     @relation(fields: [relatedPostId], references: [id])
+  relatedPostId Int
+  title         String
+  content       String
+  features      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Proposal {
+  id            Int      @id @default(autoincrement())
+  relatedPost   Post     @relation(fields: [relatedPostId], references: [id])
+  relatedPostId Int
+  title         String
+  overview      String
+  purpose       String
+  target        String
+  composition   Composition[]
+  hasgtags      String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Composition {
+  id       Int      @id @default(autoincrement())
+  relatedProposal   Proposal     @relation(fields: [relatedProposalId], references: [id])
+  relatedProposalId Int
+  title    String
+  seconds  String
+  content  String
+}

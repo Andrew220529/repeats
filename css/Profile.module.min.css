@@ -1,0 +1,2 @@
+.profile{display:flex;flex-wrap:wrap;gap:20px;align-items:center}.profileImg{width:84px;height:84px}.profileImg img{width:100%;height:100%;border-radius:50%;-o-object-fit:cover;object-fit:cover}.profileBody{display:flex;flex-direction:column;gap:14px;flex:1}.profileName{font-size:15px;line-height:1.4;font-weight:400}.profile .snsCount{display:flex;align-items:center;gap:8px}.profile .snsCount li{display:flex;align-items:center;gap:8px}
+/*# sourceMappingURL=Profile.module.min.css.map */

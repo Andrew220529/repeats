@@ -1,0 +1,57 @@
+.post {
+    width: 100%;
+    padding: 22px 14px;
+    box-shadow: 1px 1px 8px rgb(209, 209, 209);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    &Img {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-top: 56.25%;
+        flex-shrink: 0;
+
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            object-fit: cover;
+        }
+    }
+
+    &Body {
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    &Caption {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        white-space: pre-wrap;
+        line-height: 1.5;
+    }
+
+    &Date {
+        color: rgb(95, 95, 95);
+        font-size: 14px;
+    }
+
+    &LikeCount {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: .25em;
+        img {
+            width: 15px;
+        }
+    }
+}
