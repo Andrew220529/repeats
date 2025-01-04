@@ -12,7 +12,7 @@ import { getPosts, getProfile } from '@/lib/igAPI';
 
 import GeneratePDF from '@/components/pdf/report';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import FilterBar from '@/components/molecules/FilterBar';
+import FilterBar from '@/components/Molecules/FilterBar';
 
 const Report = (props) => {
     const pathname = "odakaru_minamisoma"

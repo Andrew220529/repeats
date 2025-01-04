@@ -1,13 +1,14 @@
-import { Fragment, useState } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+
 import Profile from '@/components/ui/Profile/Profile'
 import Footer from '@/components/base/Footer/Footer';
-import Post from '@/components/ui/Post/Post';
 import Header from '@/components/base/Header/Header';
-import { useRouter } from 'next/router';
+import Post from '@/components/Organisms/Post';
+import FilterBar from '@/components/Molecules/FilterBar';
 
 import { getProfile, getPosts } from '@/pages/api/instagram';
 import { getAllUserDirectories } from '@/pages/api/fileSystemUtils';
-import FilterBar from '@/components/molecules/FilterBar';
 
 
 const PostRanking = (props) => {
@@ -32,15 +33,7 @@ const PostRanking = (props) => {
                 <Profile name={pathname} data={profile} />
                 <h3 className="sectionTitle mt50">おすすめ投稿</h3>
                 <FilterBar posts={posts} onFilterChange={handleFilterChange} />
-                <div className="cardWrap">
-                    {filteredPosts.map((post) => {
-                        return (
-                            <Fragment key={post.id}>
-                                <Post data={post} />
-                            </Fragment>
-                        )
-                    })}
-                </div>
+                <Post data={filteredPosts} />
             </main>
             <Footer path={pathname} />
         </div>

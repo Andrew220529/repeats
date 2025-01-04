@@ -1,9 +1,8 @@
 import React from 'react'
-import styles from './Post.module.scss'
 import Link from 'next/link'
+import styles from './PostCard.module.scss'
 
-function Post({ data }) {
-
+function PostCard({ data }) {
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         const year = date.getFullYear();
@@ -26,4 +25,4 @@ function Post({ data }) {
     )
 }
 
-export default Post
+export default PostCard

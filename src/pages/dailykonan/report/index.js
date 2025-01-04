@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 import GeneratePDF from '@/components/pdf/report-dailykonan';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import FilterBar from '@/components/molecules/FilterBar';
+import FilterBar from '@/components/Molecules/FilterBar';
 
 const Report = (props) => {
     const pathname = "dailykonan"

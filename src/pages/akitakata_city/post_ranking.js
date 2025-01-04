@@ -3,8 +3,8 @@ import fsPromises from 'fs/promises';
 import path from 'path';
 import Profile from '@/components/ui/Profile/Profile'
 import Footer from '@/components/base/Footer/Footer';
-import Post from '@/components/ui/Post/Post';
 import Header from '@/components/base/Header/Header';
+import Post from '@/components/Organisms/Post';
 
 const instagram_name = "akitakata_city"
 
@@ -26,15 +26,7 @@ const PostRanking = (props) => {
             <main>
                 <Profile name={instagram_name} />
                 <h3 className="sectionTitle mt50">おすすめ投稿</h3>
-                <div className="cardWrap">
-                    {sortedData.map((post) => {
-                        return (
-                            <React.Fragment key={post.id}>
-                                <Post data={post}/>
-                            </React.Fragment>
-                        )
-                    })}
-                </div>
+                <Post data={sortedData} />
             </main>
             <Footer path={instagram_name} />
         </>

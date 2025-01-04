@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import fsPromises from 'fs/promises';
 import path from 'path';
 import Profile from '@/components/ui/Profile/Profile'
 import Footer from '@/components/base/Footer/Footer';
-import Post from '@/components/ui/Post/Post';
 import Header from '@/components/base/Header/Header';
 
 const instagram_name = "akitakata_city"
