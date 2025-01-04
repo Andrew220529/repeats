@@ -119,7 +119,10 @@ const GeneratePDF = ({ jsonData }) => {
         return result;
     }
 
-    const profile = jsonData.profile;
+    // const profile = jsonData.profile;
+    // const posts = jsonData.posts;
+
+    const { profile, posts } = jsonData
 
     return (
         <Document>
@@ -160,7 +163,7 @@ const GeneratePDF = ({ jsonData }) => {
             </Page>
             <Page size="A4" style={styles.body} wrap>
                 <View>
-                    {/* <InsightMetrics
+                    <InsightMetrics
                         metrics={profile.insights.metrics}
                         title="主要メトリクス"
                     />
@@ -168,7 +171,7 @@ const GeneratePDF = ({ jsonData }) => {
                     <EngagementMetrics
                         metrics={profile.insights.engagement}
                         title="エンゲージメント指標"
-                    /> */}
+                    />
 
                     {/* <DemographicsSection demographics={profile.insights.demographics} /> */}
                 </View>

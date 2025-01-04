@@ -6,26 +6,30 @@ import Header from '@/components/base/Header/Header';
 import fsPromises from 'fs/promises';
 import path from 'path';
 
-import { Box, Button, Flex, Heading, Image, Select, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Image, Text, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import { getPosts, getProfile } from '@/lib/igAPI';
 
 import GeneratePDF from '@/components/pdf/report';
 import { PDFDownloadLink } from '@react-pdf/renderer';
+import FilterBar from '@/components/molecules/FilterBar';
 
 const Report = (props) => {
-    // const router = useRouter();
     const pathname = "odakaru_minamisoma"
 
     const { profile, posts, followers } = props
     const [isClient, setIsClient] = useState(false)
-    const [selectedYear, setSelectedYear] = useState('all');
-    const [selectedMonth, setSelectedMonth] = useState('all');
 
-    const d = new Date();
-    // const month = d.getMonth() + 1
-    const currentYear = d.getFullYear();
-    const currentMonth = d.getMonth() + 1;
+    const date = new Date();
+    const currentMonth = date.getMonth() + 1;
+
+    const [filteredPosts, setFilteredPosts] = useState(posts)
+
+    const handleFilterChange = (filteredData) => {
+        filteredData.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        setFilteredPosts(filteredData);
+    };
 
     const averageByArray = function () {
         const array = posts.map((obj) => obj.like_count);
@@ -48,25 +52,9 @@ const Report = (props) => {
         }
     };
 
-
-    const filteredData = posts.filter(post => post.like_count !== undefined)
-
-    const sortedAndFilteredData = filteredData
-        .filter(post => {
-            const postDate = new Date(post.timestamp);
-            const postYear = postDate.getFullYear();
-            const postMonth = postDate.getMonth() + 1;
-            return (selectedYear === 'all' || postYear === parseInt(selectedYear)) &&
-                (selectedMonth === 'all' || postMonth === parseInt(selectedMonth));
-        })
-        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-
     useEffect(() => {
         setIsClient(true);
     }, []);
-
-    const years = [...new Set(filteredData.map(post => new Date(post.timestamp).getFullYear()))].sort((a, b) => b - a);
-    const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
     return (
         <div className='wrap'>
@@ -85,24 +73,11 @@ const Report = (props) => {
                     }
                 </Flex>
 
-                <Flex justifyContent="center" mt={4} mb={4}>
-                    <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} mr={2}>
-                        <option value="all">全ての年</option>
-                        {years.map(year => (
-                            <option key={year} value={year}>{year}年</option>
-                        ))}
-                    </Select>
-                    <Select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
-                        <option value="all">全ての月</option>
-                        {months.map(month => (
-                            <option key={month} value={month}>{month}月</option>
-                        ))}
-                    </Select>
-                </Flex>
+                <FilterBar posts={posts} onFilterChange={handleFilterChange} />
 
                 <div className="cardWrap">
                     <VStack gap={"20px"} w={"100%"}>
-                        {sortedAndFilteredData.map((data, index) => {
+                        {filteredPosts.map((data, index) => {
                             const date = new Date(data.timestamp);
                             const year = date.getFullYear();
                             const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Adding 1 because months are 0-indexed
@@ -126,7 +101,7 @@ const Report = (props) => {
                                 </Link>
                             )
                         })}
-                        {sortedAndFilteredData.length === 0 && <Box>投稿がありません</Box>}
+                        {filteredPosts.length === 0 && <Box>投稿がありません</Box>}
                     </VStack>
                 </div>
             </main>

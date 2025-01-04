@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
 import Profile from '@/components/ui/Profile/Profile'
 import Footer from '@/components/base/Footer/Footer';
 import Header from '@/components/base/Header/Header';
-import { useRouter } from 'next/router';
-import get_followers from '@/lib/get_followers';
-import { getProfile } from '@/lib/igAPI';
+
+import { getProfile } from '@/pages/api/instagram';
+import { getAllUserDirectories } from '@/pages/api/fileSystemUtils';
 
 
 const CommonTag = (props) => {
@@ -169,17 +170,21 @@ const CommonTag = (props) => {
 export default CommonTag;
 
 export async function getStaticPaths() {
-    const followers = get_followers();
-    const paths = followers.map(follower => ({
-        params: { social_media_username: follower },
+    const userDirectories = await getAllUserDirectories();
+    const paths = userDirectories.map(username => ({
+        params: { social_media_username: username },
     }))
 
-    return { paths, fallback: false }
+    return {
+        paths,
+        fallback: false
+    }
 }
 
+
 export async function getStaticProps({ params }) {
-    const pathname = params.social_media_username
-    const profile = await getProfile(pathname)
+    const username = params.social_media_username
+    const profile = await getProfile(username)
 
     return {
         props: {

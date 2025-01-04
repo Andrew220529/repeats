@@ -21,7 +21,6 @@
     "@react-pdf/renderer": "^3.4.5",
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
-    "framer-motion": "^11.1.7",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.2",
     "next": "^14.0.3",

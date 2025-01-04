@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import fsPromises from 'fs/promises';
-import path from 'path';
+import { useEffect, useState, Fragment } from 'react';
 import { useRouter } from 'next/router';
+
 import Profile from '@/components/ui/Profile/Profile'
 import Card from '@/components/ui/Card/Card'
 import Footer from '@/components/base/Footer/Footer';
 import Header from '@/components/base/Header/Header';
-import get_followers from '@/lib/get_followers';
-import { getProfile } from '@/lib/igAPI';
+
+import { getProfile } from '@/pages/api/instagram';
+import { getAllUserDirectories, getFollowerData } from '@/pages/api/fileSystemUtils';
 
 const index = (props) => {
     const router = useRouter();
@@ -21,7 +21,7 @@ const index = (props) => {
     const rearrangedList = [...filteredList, ...unknownInterestItems];
 
     const [sortedData, setSortedData] = useState([]);
-    const [searchTerm, setSearchTerm] = React.useState('');
+    const [searchTerm, setSearchTerm] = useState('');
 
     const filteredFollowers = rearrangedList.filter(follower => {
         return (
@@ -44,9 +44,9 @@ const index = (props) => {
                 <div className="cardWrap">
                     {sortedData.map((user) => {
                         return (
-                            <React.Fragment key={user.username}>
+                            <Fragment key={user.username}>
                                 <Card data={user} />
-                            </React.Fragment>
+                            </Fragment>
                         )
                     })}
                 </div>
@@ -59,26 +59,26 @@ const index = (props) => {
 export default index;
 
 export async function getStaticPaths() {
-    const followers = get_followers();
-    const paths = followers.map(follower => ({
-        params: { social_media_username: follower },
+    const userDirectories = await getAllUserDirectories();
+    const paths = userDirectories.map(username => ({
+        params: { social_media_username: username },
     }))
 
-    return { paths, fallback: false }
+    return {
+        paths,
+        fallback: false
+    }
 }
 
 export async function getStaticProps({ params }) {
-    const pathname = params.social_media_username
-    const profile = await getProfile(pathname)
-
-    const followerFilePath = path.join(process.cwd(), `src/data/${pathname}`, 'follower.json');
-    const followerData = await fsPromises.readFile(followerFilePath)
-    const followerObjectData = JSON.parse(followerData)
+    const username = params.social_media_username
+    const profile = await getProfile(username)
+    const followers = await getFollowerData(username)
 
     return {
-        props: { 
+        props: {
             profile: profile,
-            followers: followerObjectData
+            followers: followers
         }
     }
 }

@@ -1,6 +1,6 @@
 const ig = {
-    id: '17841408255214525',
-    access_token: 'EAAL6ZAgqUPhkBO0BBAzXUFhGojl3SCsIPv4Vmkv59ZCU1C3B1M1rZAFugbmSiFJyI8gAZAg8HMZCARtx1Xc1LbMLJJGlk7htKgJxNx0Kp2tYZChg8MlCKZCYDtteWt80EajQBmXZCeLhWlpi7MPVGdOxXMOzhSu9r8vo6upf44GQeMwVmiFt6j5xLtmr'
+    id: process.env.NEXT_PUBLIC_BUSINESS_ID,
+    access_token: process.env.NEXT_PUBLIC_ACCESSTOKEN
 }
 
 export const getProfile = async (name) => {

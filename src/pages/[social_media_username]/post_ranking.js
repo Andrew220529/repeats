@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import Profile from '@/components/ui/Profile/Profile'
 import Footer from '@/components/base/Footer/Footer';
 import Post from '@/components/ui/Post/Post';
 import Header from '@/components/base/Header/Header';
 import { useRouter } from 'next/router';
-import get_followers from '@/lib/get_followers';
-import { getPosts, getProfile } from '@/lib/igAPI';
-import { Flex, Select } from '@chakra-ui/react';
+
+import { getProfile, getPosts } from '@/pages/api/instagram';
+import { getAllUserDirectories } from '@/pages/api/fileSystemUtils';
+import FilterBar from '@/components/molecules/FilterBar';
 
 
 const PostRanking = (props) => {
@@ -14,24 +15,15 @@ const PostRanking = (props) => {
     const pathname = router.query.social_media_username
 
     const { posts, profile } = props
-    const [selectedYear, setSelectedYear] = useState('all');
-    const [selectedMonth, setSelectedMonth] = useState('all');
+    const [filteredPosts, setFilteredPosts] = useState(posts)
 
-    const years = [...new Set(posts.map(post => new Date(post.timestamp).getFullYear()))].sort((a, b) => b - a);
-    const months = Array.from({ length: 12 }, (_, i) => i + 1);
+    const handleFilterChange = (filteredData) => {
+        filteredData.sort((a, b) => b.like_count - a.like_count);
 
-    const filteredAndSortedData = posts
-        .filter(post => {
-            if (post.like_count === undefined) return false;
+        setFilteredPosts(filteredData);
+    };
 
-            const postDate = new Date(post.timestamp);
-            const postYear = postDate.getFullYear();
-            const postMonth = postDate.getMonth() + 1;
 
-            return (selectedYear === 'all' || postYear === parseInt(selectedYear)) &&
-                (selectedMonth === 'all' || postMonth === parseInt(selectedMonth));
-        })
-        .sort((a, b) => b.like_count - a.like_count);
 
     return (
         <div className='wrap'>
@@ -39,26 +31,13 @@ const PostRanking = (props) => {
             <main>
                 <Profile name={pathname} data={profile} />
                 <h3 className="sectionTitle mt50">おすすめ投稿</h3>
-                <Flex justifyContent="center" mt={4} mb={4}>
-                    <Select value={selectedYear} onChange={(e) => setSelectedYear(e.target.value)} mr={2}>
-                        <option value="all">全ての年</option>
-                        {years.map(year => (
-                            <option key={year} value={year}>{year}年</option>
-                        ))}
-                    </Select>
-                    <Select value={selectedMonth} onChange={(e) => setSelectedMonth(e.target.value)}>
-                        <option value="all">全ての月</option>
-                        {months.map(month => (
-                            <option key={month} value={month}>{month}月</option>
-                        ))}
-                    </Select>
-                </Flex>
+                <FilterBar posts={posts} onFilterChange={handleFilterChange} />
                 <div className="cardWrap">
-                    {filteredAndSortedData.map((post) => {
+                    {filteredPosts.map((post) => {
                         return (
-                            <React.Fragment key={post.id}>
+                            <Fragment key={post.id}>
                                 <Post data={post} />
-                            </React.Fragment>
+                            </Fragment>
                         )
                     })}
                 </div>
@@ -71,18 +50,21 @@ const PostRanking = (props) => {
 export default PostRanking;
 
 export async function getStaticPaths() {
-    const followers = get_followers();
-    const paths = followers.map(follower => ({
-        params: { social_media_username: follower },
+    const userDirectories = await getAllUserDirectories();
+    const paths = userDirectories.map(username => ({
+        params: { social_media_username: username },
     }))
 
-    return { paths, fallback: false }
+    return {
+        paths,
+        fallback: false
+    }
 }
 
 export async function getStaticProps({ params }) {
-    const pathname = params.social_media_username;
-    const profile = await getProfile(pathname);
-    const posts = await getPosts(pathname);
+    const username = params.social_media_username;
+    const profile = await getProfile(username);
+    const posts = await getPosts(username);
 
     return {
         props: {
