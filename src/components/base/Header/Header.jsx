@@ -10,7 +10,6 @@ const { publicRuntimeConfig } = getConfig();
 function Header({ path, searchTerm, onSearchChange }) {
     const basePath = (publicRuntimeConfig && publicRuntimeConfig.basePath) || "";
     // const pathname = props.path
-    // pathをpropsから取得
     const pathname = path
 
     const router = useRouter();
